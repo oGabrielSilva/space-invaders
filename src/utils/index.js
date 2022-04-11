@@ -30,7 +30,7 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 document.querySelector('link').href = invader;
 
-if (isMobile) setButtonsMobile();
+if (isMobile || innerWidth < 500) setButtonsMobile();
 
 addEventListener('resize', () => {
   canvas.width = innerWidth;

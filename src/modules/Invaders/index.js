@@ -66,7 +66,6 @@ export class Grid {
     }
 
     this.width = colums * 30;
-    console.log(this.invaders);
   }
 
   update() {
