@@ -13,7 +13,7 @@ export default class Player {
       this.height = this.image.height * scale;
       this.position = {
         x: canvas.width / 2 - this.width / 2,
-        y: canvas.height - this.height - 20,
+        y: canvas.height - this.height - 75,
       };
     };
     this.velocity = { x: 0, y: 0 };

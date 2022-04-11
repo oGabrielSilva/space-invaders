@@ -4,7 +4,7 @@ import { Grid } from './src/modules/Invaders';
 import Particle from './src/modules/Particle';
 import Player from './src/modules/Player';
 import Projectile from './src/modules/Projectile';
-import { ctx, canvas, velocity, rotation } from './src/utils';
+import { ctx, canvas, velocity, rotation, mobile } from './src/utils';
 
 export const particles = [];
 const game = new Game();
@@ -20,6 +20,50 @@ const keys = {
 };
 
 Particle.CreateStars('white');
+
+const setClick = (key) => {
+  if (game.over) return;
+  switch (key.toLowerCase()) {
+    case 'a':
+      keys.a.pressed = true;
+      break;
+    case 'd':
+      keys.d.pressed = true;
+      break;
+    case ' ':
+      if (player.justFired) return;
+      projectiles.push(
+        new Projectile({
+          position: {
+            x: player.position.x + player.width / 2,
+            y: player.position.y,
+          },
+          velocity: { x: 0, y: -5 },
+        })
+      );
+      player.justFired = true;
+      setTimeout(() => (player.justFired = false), player.timing);
+      break;
+    default:
+      break;
+  }
+};
+
+const setClickKeyup = (key) => {
+  switch (key.toLowerCase()) {
+    case 'a':
+      keys.a.pressed = false;
+      break;
+    case 'd':
+      keys.d.pressed = false;
+      break;
+    case ' ':
+      keys.space.pressed = false;
+      break;
+    default:
+      break;
+  }
+};
 
 function animate() {
   if (!game.active) return;
@@ -137,46 +181,18 @@ function animate() {
 
 animate();
 
-addEventListener('keydown', ({ key }) => {
-  if (game.over) return;
-  switch (key.toLowerCase()) {
-    case 'a':
-      keys.a.pressed = true;
-      break;
-    case 'd':
-      keys.d.pressed = true;
-      break;
-    case ' ':
-      if (player.justFired) return;
-      projectiles.push(
-        new Projectile({
-          position: {
-            x: player.position.x + player.width / 2,
-            y: player.position.y,
-          },
-          velocity: { x: 0, y: -5 },
-        })
-      );
-      player.justFired = true;
-      setTimeout(() => (player.justFired = false), player.timing);
-      break;
-    default:
-      break;
-  }
-});
+addEventListener('keydown', ({ key }) => setClick(key));
 
-addEventListener('keyup', ({ key }) => {
-  switch (key.toLowerCase()) {
-    case 'a':
-      keys.a.pressed = false;
-      break;
-    case 'd':
-      keys.d.pressed = false;
-      break;
-    case ' ':
-      keys.space.pressed = false;
-      break;
-    default:
-      break;
-  }
+addEventListener('keyup', ({ key }) => setClickKeyup(key));
+
+mobile.forEach((scope) => {
+  scope.local.addEventListener('click', () => {
+    if (scope.local.classList.contains('null')) return;
+    setClick(scope.key);
+    scope.local.classList.add('clicked');
+    setTimeout(() => {
+      scope.local.classList.remove('clicked');
+      setClickKeyup(scope.key);
+    }, 200);
+  });
 });
