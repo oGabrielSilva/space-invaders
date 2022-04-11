@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'electrolize';
+  src: url('../assets/fonts/Electrolize-Regular.ttf');
+}
+
+body {
+  margin: 0;
+}
+
+div {
+  color: #fff;
+  position: fixed;
+  z-index: 10;
+  left: 10px;
+  top: 10px;
+  margin: 0;
+  font-size: 22px;
+  font-family: 'electrolize', Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+span {
+  color: #8080ff;
+  margin-top: 2px;
+  margin-left: 7px;
+}
+
+canvas {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
